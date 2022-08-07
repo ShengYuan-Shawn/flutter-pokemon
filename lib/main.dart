@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokemon/pikachu.dart';
+import 'package:flutter_pokemon/stone.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,38 +34,13 @@ class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   // Score Count Declaration
   int countScore = 0;
-  int speed = 1500;
 
-  // Animation Declaration
-  late AnimationController _animationController;
-  late Animation<Offset> _offsetAnimation;
+  final GlobalKey<PikachuState> PikachuKey = GlobalKey();
 
-  // Score Increment
-  void incrementScore() {
+  void scorePoints() {
     setState(() {
       countScore++;
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 6))
-          ..repeat(reverse: true);
-
-    _offsetAnimation = Tween<Offset>(
-      begin: Offset(1.5, 0),
-      end: const Offset(1.5, 0),
-    ).animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.linear));
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _animationController.dispose();
   }
 
   @override
@@ -73,45 +50,32 @@ class _MyHomePageState extends State<MyHomePage>
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.all(50),
-              child: Text(
-                'Score: ${countScore}',
-                style: const TextStyle(
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 30),
-              ),
-            ),
-            Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Text('Score: $scorePoints'),
+          Center(
+            child: Stack(
               children: <Widget>[
-                Image.asset(
-                  'assets/stay.png',
-                  width: 120,
-                  height: 120,
-                ),
-                Image.asset(
-                  'assets/stone.png',
-                  position: _offsetAnimation,
-                  width: 120,
-                  height: 120,
+                Stone(),
+                Positioned(
+                  child: Pikachu(key: PikachuKey),
                 ),
               ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                countScore++;
-              },
-              style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
-              child: const Text('Jump!'),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState(
+              () {
+                PikachuKey.currentState?.jumping;
+              },
+            );
+          },
+          child: const Text('Jump!')),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
