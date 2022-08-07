@@ -35,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage>
   // Score Count Declaration
   int countScore = 0;
 
+  // ignore: non_constant_identifier_names
   final GlobalKey<PikachuState> PikachuKey = GlobalKey();
 
   void scorePoints() {
@@ -51,9 +52,19 @@ class _MyHomePageState extends State<MyHomePage>
         centerTitle: true,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Text('Score: $scorePoints'),
+          // margin: const EdgeInsets.only(bottom: 100),
+          Container(
+            padding: const EdgeInsets.only(top: 80, bottom: 280),
+            child: Text(
+              'Score: $countScore',
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           Center(
             child: Stack(
               children: <Widget>[
@@ -70,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage>
           onPressed: () {
             setState(
               () {
-                PikachuKey.currentState?.jumping;
+                PikachuKey.currentState?.jumping();
               },
             );
           },

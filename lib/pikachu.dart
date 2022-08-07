@@ -14,7 +14,7 @@ class PikachuState extends State<Pikachu> with SingleTickerProviderStateMixin {
   // Animation Declaration
   late final AnimationController _animationController = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 1),
+    duration: const Duration(milliseconds: 1000),
   )..repeat(reverse: true);
 
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(
@@ -47,32 +47,17 @@ class PikachuState extends State<Pikachu> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (isJump) {
-      return SlideTransition(
-        position: _offsetAnimation,
-        child: Container(
-          width: 100.0,
-          height: 100.0,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/jump.png'),
-            ),
+    return SlideTransition(
+      position: _offsetAnimation,
+      child: Container(
+        width: 100.0,
+        height: 100.0,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(isJump ? 'assets/jump.png' : 'assets/stay.png'),
           ),
         ),
-      );
-    } else {
-      return SlideTransition(
-        position: _offsetAnimation,
-        child: Container(
-          width: 100.0,
-          height: 100.0,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/stay.png'),
-            ),
-          ),
-        ),
-      );
-    }
+      ),
+    );
   }
 }
