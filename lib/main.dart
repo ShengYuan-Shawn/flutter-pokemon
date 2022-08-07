@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pokemon Game',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.amber,
       ),
       home: const MyHomePage(title: 'Pokemon Game'),
     );
@@ -32,10 +32,18 @@ class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   // Score Count Declaration
   int countScore = 0;
+  int speed = 1500;
 
   // Animation Declaration
   late AnimationController _animationController;
   late Animation<Offset> _offsetAnimation;
+
+  // Score Increment
+  void incrementScore() {
+    setState(() {
+      countScore++;
+    });
+  }
 
   @override
   void initState() {
